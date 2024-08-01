@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+contract DiamondLedger {
+    mapping(uint=>uint)private diamonds;
+
+    event diamontlist(uint weight,uint count);
+    //this function imports the diamonds
+    function importDiamonds(uint[] memory weights) public {
+       for(uint i=0;i<weights.length;i++){
+        uint w=weights[i];
+        require(w>=0 && w<=1000,"Insufficent weight");
+        diamonds[w]++;
+       emit  diamontlist(w,diamonds[w]);
+       }
+    }
+
+    //this function returns the total number of available diamonds as per the weight
+    function availableDiamonds(uint weight) public view returns(uint) {
+        return diamonds[weight];
+    }
+
+}
