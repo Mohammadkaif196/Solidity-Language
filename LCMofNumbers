@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.10;
+
+contract LCM {
+
+         function gcd(uint a, uint b) public pure returns (uint) {
+             if(b==0){
+                return a;
+             }
+             return gcd(b,a%b);
+         }
+    //this function calculates the LCM
+    function lcm(uint a, uint b) public pure returns (uint) {
+         require(a>0 && b>0,"greater than zero");
+         return (a*b)/gcd(a,b);
+    }
+}
