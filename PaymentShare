@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity ^0.8.28;
+
+contract PaymentShare{
+
+    function splitshare(address[] memory peoples,uint[] memory shares) public payable{
+       require(peoples.length==shares.length, "Its invalid data");
+       require(peoples.length > 0, "The people array cannot be empty");
+       require(msg.value > 0," you cannot transact");
+       uint totalshare=0;
+       for(uint i=0;i<shares.length;i++){
+       totalshare+=shares[i];
+       }
+       require(totalshare==100,"It must be 100 as total");
+
+       for(uint i=0;i<peoples.length;i++){
+        uint payment=(msg.value*shares[i])/100;
+        (bool sent ,)=peoples[i].call{value:payment}("");
+        require(sent,"Transaction failed");
+
+       }
+    }
+
+}
